@@ -18,9 +18,9 @@ class Service {
     delete query.limit;
     delete query.sortBy;
 
-    if (query._id) {
+    if (query.id) {
       try {
-        query._id = new mongoose.mongo.ObjectId(query._id);
+        query.id = new mongoose.mongo.ObjectId(query.id);
       } catch (error) {
         throw new Error("Not able to generate mongoose id with content");
       }

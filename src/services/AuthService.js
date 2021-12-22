@@ -36,7 +36,7 @@ class AuthService {
 
         await this.model.create({
           token,
-          user: new mongoose.mongo.ObjectId(user._id),
+          user: new mongoose.mongo.ObjectId(user.id),
         });
         const tokenData = await this.model
           .findOne({ token: token })
@@ -97,7 +97,7 @@ class AuthService {
         throw error;
       }
       // Check the Extracted user is active in DB
-      const userFromDb = await this.userService.get(user._id);
+      const userFromDb = await this.userService.get(user.id);
 
       if (userFromDb.data && userFromDb.data.status) {
         return userFromDb.data;

@@ -21,7 +21,16 @@ class Auth {
           ref: "user",
         },
       },
-      { timestamps: true }
+      {
+        timestamps: true,
+        toJSON: {
+          transform: (doc, ret) => {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+          },
+        },
+      }
     );
 
     schema.statics.generateToken = async function (user) {
@@ -29,7 +38,7 @@ class Auth {
       try {
         const token = await jwt.sign(
           {
-            _id: user._id.toString(),
+            id: user.id.toString(),
             email: user.email,
             name: user.name,
             role: user.role,
@@ -56,7 +65,6 @@ class Auth {
       }
     };
     // schema.set("toJSON", { virtuals: true });
-
 
     try {
       mongoose.model("auth", schema);

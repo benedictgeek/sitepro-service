@@ -40,7 +40,7 @@ class AuthController {
 
   async changePassword(req, res, next) {
     try {
-      const id = req.user._id;
+      const id = req.user.id;
 
       bcrypt.genSalt(SALT_WORK_FACTOR, async (err, salt) => {
         if (err) {
